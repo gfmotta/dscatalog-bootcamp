@@ -38,8 +38,8 @@ public class CategoryResource {
 		
 		PageRequest pageRequest = PageRequest.of(page, size, Direction.valueOf(direction), orderBy);
 		
-		Page<CategoryDTO> categoryList = service.pagedFindAll(pageRequest);
-		return ResponseEntity.ok().body(categoryList);
+		Page<CategoryDTO> categoryPage = service.pagedFindAll(pageRequest);
+		return ResponseEntity.ok().body(categoryPage);
 	}
 
 	@GetMapping(value = "/{id}")
