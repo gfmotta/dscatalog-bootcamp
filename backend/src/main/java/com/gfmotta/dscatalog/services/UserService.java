@@ -51,7 +51,7 @@ public class UserService {
 	@Transactional
 	public UserDTO insert(UserInsertDTO dto) {
 		User entity = new User();
-		copyDtoToEntity(dto, entity);
+		mapToEntity(dto, entity);
 		entity.setPassword(encoder.encode(dto.getPassword()));
 		entity = userRepository.save(entity);
 		return new UserDTO(entity);
@@ -61,7 +61,7 @@ public class UserService {
 	public UserDTO update(Long id, UserDTO dto) {
 		try {
 			User entity = userRepository.getOne(id);
-			copyDtoToEntity(dto, entity);
+			mapToEntity(dto, entity);
 			entity = userRepository.save(entity);
 			return new UserDTO(entity);
 		} 
@@ -82,7 +82,7 @@ public class UserService {
 		}
 	}
 
-	private void copyDtoToEntity(UserDTO dto, User entity) {
+	private void mapToEntity(UserDTO dto, User entity) {
 		entity.setFirstName(dto.getFirstName());
 		entity.setLastName(dto.getLastName());
 		entity.setEmail(dto.getEmail());
