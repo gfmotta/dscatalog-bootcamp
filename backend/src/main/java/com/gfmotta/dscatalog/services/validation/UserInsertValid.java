@@ -1,5 +1,6 @@
 package com.gfmotta.dscatalog.services.validation;
 
+import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -11,7 +12,7 @@ import javax.validation.Payload;
 @Constraint(validatedBy = UserInsertValidator.class)
 @Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
-
+@Documented
 public @interface UserInsertValid {
 	String message() default "Validation error";
 

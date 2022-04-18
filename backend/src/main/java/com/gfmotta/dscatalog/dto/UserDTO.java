@@ -4,11 +4,11 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import com.gfmotta.dscatalog.entities.User;
+import com.gfmotta.dscatalog.services.validation.ExtendedEmailValid;
 
 public class UserDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -23,7 +23,7 @@ public class UserDTO implements Serializable {
 	@Size(min = 3, max = 20, message = "Nome deve ter de 3 a 20 caracteres")
 	private String lastName;
 	
-	@Email(message = "Email inválido")
+	@ExtendedEmailValid(message = "Email invalido")
 	private String email;
 	
 	Set<RoleDTO> roles = new HashSet<>();

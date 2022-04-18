@@ -48,6 +48,7 @@ public class UserUpdateValidator implements ConstraintValidator<UserUpdateValid,
 			context.buildConstraintViolationWithTemplate(e.getMessage()).addPropertyNode(e.getFieldName())
 					.addConstraintViolation();
 		}
+		
 		return list.isEmpty();
 	}
 }
