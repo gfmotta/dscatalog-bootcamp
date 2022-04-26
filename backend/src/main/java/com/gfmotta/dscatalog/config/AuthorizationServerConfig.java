@@ -63,12 +63,12 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-		var chain = new TokenEnhancerChain();
-		chain.setTokenEnhancers(Arrays.asList(tokenConverter, tokenEnhancer));
+		var tokenChain = new TokenEnhancerChain();
+		tokenChain.setTokenEnhancers(Arrays.asList(tokenConverter, tokenEnhancer));
 		
 		endpoints.authenticationManager(authenticationManager)
 		.tokenStore(tokenStore)
 		.accessTokenConverter(tokenConverter)
-		.tokenEnhancer(chain);
+		.tokenEnhancer(tokenChain);
 	}
 }
