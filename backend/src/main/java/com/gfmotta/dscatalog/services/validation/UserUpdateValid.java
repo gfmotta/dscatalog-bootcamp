@@ -14,6 +14,7 @@ import javax.validation.Payload;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface UserUpdateValid {
+	
 	String message() default "Validation error";
 
 	Class<?>[] groups() default {};

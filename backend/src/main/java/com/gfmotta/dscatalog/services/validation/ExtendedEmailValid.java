@@ -24,6 +24,7 @@ import javax.validation.constraints.Pattern;
 @Constraint(validatedBy = { })
 @Documented
 public @interface ExtendedEmailValid {
+	
     String message() default "Validation error";
     
     Class<?>[] groups() default {};
