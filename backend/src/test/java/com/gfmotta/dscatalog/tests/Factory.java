@@ -9,7 +9,7 @@ import com.gfmotta.dscatalog.entities.Product;
 public class Factory {
 	
 	public static Product newProduct() {
-		Product product = new Product(1L, "Phone", "Good phone", 800.0, "https://img.com/img.png", Instant.parse("2020-08-25T00:00:00Z"));
+		Product product = new Product(null, "Phone", "Good phone", 800.0, "https://img.com/img.png", Instant.parse("2020-08-25T00:00:00Z"));
 		product.getCategories().add(new Category(2L, "Electronics"));
 		return product;
 	}

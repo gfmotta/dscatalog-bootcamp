@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gfmotta.dscatalog.dto.ProductDTO;
 import com.gfmotta.dscatalog.tests.Factory;
+import com.gfmotta.dscatalog.tests.TokenUtil;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -28,17 +29,24 @@ public class ProductResourceIT {
 	private MockMvc mockMvc;
 	
 	@Autowired
+	private TokenUtil tokenUtil;
+	
+	@Autowired
 	private ObjectMapper objMapper;
 	
 	private long existingId;
 	private long nonExistingId;
 	private long totalProducts;
+	private String username;
+	private String password;
 	
 	@BeforeEach
 	void setUp() throws Exception {
 		existingId = 1L;
 		nonExistingId = 100L;
 		totalProducts = 25L;
+		username = "maria@gmail.com";
+		password = "123456";
 	}
 	
 	@Test
@@ -56,6 +64,8 @@ public class ProductResourceIT {
 	
 	@Test
 	public void updateShouldReturnProductDtoWhenIdExists() throws Exception {
+		String accessToken = tokenUtil.obtainAccessToken(mockMvc, username, password);
+		
 		ProductDTO productDto = Factory.newProductDTO();
 		
 		String json = objMapper.writeValueAsString(productDto);
@@ -63,6 +73,7 @@ public class ProductResourceIT {
 		String expectedName = productDto.getName();
 		
 		ResultActions result = mockMvc.perform(put("/products/{id}", existingId)
+				.header("Authorization", "Bearer " + accessToken)
 				.content(json)
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON));
@@ -74,11 +85,14 @@ public class ProductResourceIT {
 	
 	@Test
 	public void updateShouldReturnNotFoundWhenIdDoesNotExist() throws Exception {
+		String accessToken = tokenUtil.obtainAccessToken(mockMvc, username, password);
+		
 		ProductDTO productDto = Factory.newProductDTO();
 		
 		String json = objMapper.writeValueAsString(productDto);
 		
 		ResultActions result = mockMvc.perform(put("/products/{id}", nonExistingId)
+				.header("Authorization", "Bearer " + accessToken)
 				.content(json)
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON));

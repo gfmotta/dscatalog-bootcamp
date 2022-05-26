@@ -64,7 +64,7 @@ public class ProductServiceTests {
 		Mockito.when(categoryRepository.getOne(nonExistingId)).thenThrow(EntityNotFoundException.class);
 		Mockito.when(productRepository.getOne(existingId)).thenReturn(product);
 		Mockito.when(productRepository.getOne(nonExistingId)).thenThrow(EntityNotFoundException.class);
-		Mockito.when(productRepository.findAll((Pageable) ArgumentMatchers.any())).thenReturn(page);
+		Mockito.when(productRepository.findProducts(ArgumentMatchers.any(), ArgumentMatchers.any(), (Pageable) ArgumentMatchers.any())).thenReturn(page);
 		Mockito.when(productRepository.save(ArgumentMatchers.any())).thenReturn(product);
 		Mockito.when(productRepository.findById(existingId)).thenReturn(Optional.of(product));
 		Mockito.when(productRepository.findById(nonExistingId)).thenReturn(Optional.empty());
@@ -112,10 +112,10 @@ public class ProductServiceTests {
 	public void findAllShouldReturnPage() {
 		Pageable pageable = PageRequest.of(0, 10);
 
-		Page<ProductDTO> page = service.findAll(pageable);
+		Page<ProductDTO> page = service.findAll(pageable, 0L, "");
 
 		Assertions.assertNotNull(page);
-		Mockito.verify(productRepository).findAll(pageable);
+		Mockito.verify(productRepository).findProducts(null, "", pageable);
 	}
 
 	@Test
